@@ -9,7 +9,7 @@ function App() {
   const wsRef = useRef(null)
 
   useEffect(() => {
-    // Connect to WebSocket
+    // Connect to WebSocket (without explicit port - WSS uses 443 by default)
     const ws = new WebSocket('wss://feed.iel.net.pk')
     wsRef.current = ws
 
@@ -33,8 +33,8 @@ function App() {
       setConnectionStatus('error')
     }
 
-    ws.onclose = () => {
-      console.log('WebSocket disconnected')
+    ws.onclose = (event) => {
+      console.log('WebSocket disconnected', event.code, event.reason)
       setConnectionStatus('disconnected')
     }
 
